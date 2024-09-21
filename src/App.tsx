@@ -1,8 +1,16 @@
+// App.tsx
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./pages/login";
+import Home from "./pages/home";
+
 const App = () => {
   return (
-    <div className="bg-slate-600">
-      <h1 className="text-red-500">salom va xayr xullas</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
 };
 
