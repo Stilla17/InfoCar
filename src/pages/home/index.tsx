@@ -1,37 +1,54 @@
-import ModelCar from "../../components/organisms/model_card";
 import { useEffect, useState } from "react";
-interface MODEL_TYPE {
+import { Link } from "react-router-dom";
+interface CATEGORY_TYPES {
   id: number;
   name: string;
   avatar: string;
 }
-
 const Home: React.FC = () => {
-  const [data, setData] = useState<MODEL_TYPE[]>([]);
-  const CAR_MODEL = "https://66e3ddf6d2405277ed121c0f.mockapi.io/Model";
+  const [breadcrumb, setBreadCrumb] = useState<boolean>(false);
+  const [categoryData, setCategoryData] = useState<CATEGORY_TYPES[]>();
+  const [warning, setWarning] = useState<string | null>(null);
+
+  const CATEGORY = "https://66e3ddf6d2405277ed121c0f.mockapi.io/Category";
+
+  const changeBreadCrumb = () => {
+    setBreadCrumb(true);
+  };
 
   useEffect(() => {
-    const fetch_data = async () => {
+    const getModelData = async () => {
       try {
-        const response = await fetch(CAR_MODEL);
-        if (!response.ok) {
-          throw new Error("Network response was not ok!");
+        const responce = await fetch(CATEGORY);
+        if (!responce.ok) {
+          throw new Error("Javob rost emas!");
         }
-        const data: MODEL_TYPE[] = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error("Fetch error: ", error);
+        const result = await responce.json();
+        setCategoryData(result);
+        setWarning(null);
+      } catch (err: any) {
+        setWarning(err.message || "Somtheng went wrong!");
       }
     };
-    fetch_data();
-  }, []);
+    getModelData();
+  }, [CATEGORY]);
 
   return (
-    <div className="home flex gap-[100px] flex-wrap items-center">
-      {data.map((item) => (
-        <ModelCar key={item.id} name={item.name} avatar={item.avatar} />
+    <div className="home flex gap-[20px] ">
+      {categoryData?.map((item) => (
+        <Link key={item.id} to={`/models/${item.name}`}>
+          <div className="w-[300px] ">
+            <img
+              className="h-[200px]"
+              src={item.avatar}
+              alt={item.name + " image"}
+            />
+            <h2>{item.name}</h2>
+          </div>
+        </Link>
       ))}
     </div>
   );
 };
+
 export default Home;

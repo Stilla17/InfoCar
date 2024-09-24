@@ -1,22 +1,18 @@
 import { useLocation } from "react-router-dom";
-import Breadcrumb from "../../components/organisms/breadcrumb/Breadcrumb";
 
-const Item = () => {
+const Item: React.FC = () => {
   const location = useLocation();
-  const itemData = location.state;
-  console.log(itemData);
+  const model = location.state?.model;
 
-  if (!itemData) {
-    return <div>No data available</div>;
+  if (!model) {
+    return <div>Model not found!</div>;
   }
 
   return (
-    <div>
-      <Breadcrumb />
-      <h1>{itemData.name}</h1>
-      <img src={itemData.avatar} alt={itemData.name} />
-      <p>Price: {itemData.price}</p>
-      <p>Description: {itemData.description || "No description available"}</p>
+    <div className="item">
+      <h2>{model.name}</h2>
+      <img src={model.avatar} alt={model.name} />
+      <p>Price: {model.price}</p>
     </div>
   );
 };

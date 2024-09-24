@@ -1,31 +1,42 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-
-const Breadcrumb = () => {
+// Breadcrumb.tsx
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useRef } from "react";
+const Breadcrumb: React.FC = () => {
   const location = useLocation();
-  const paths = location.pathname.split("/").filter((path) => path);
-  const lastPath = paths[paths.length - 1];
+  const pathnames = location.pathname.split("/").filter((x) => x);
+
+  const myRef = useRef<HTMLAnchorElement>(null);
+  const [modelsLinks, setModelsLinks] = useState<any>();
+  console.log(modelsLinks);
+
+  useEffect(() => {
+    if (myRef.current) {
+      setModelsLinks(myRef.current.href);
+    }
+  }, [pathnames]);
 
   return (
-    <nav className="breadcrumb">
-      <ul className="flex gap-2 text-sm">
-        <li>
-          <Link to="/">Bosh sahifa</Link>
-        </li>
-        {paths.map((path, index) => (
-          <React.Fragment key={index}>
-            <span>&gt;</span>
-            <li>
-              {index < paths.length - 1 ? (
-                <Link to={`/${path}`}>{path}</Link>
-              ) : (
-                lastPath.charAt(0).toUpperCase() + lastPath.slice(1)
-              )}
-            </li>
-          </React.Fragment>
-        ))}
-      </ul>
-    </nav>
+    <div>
+      {pathnames.length === 0 ? (
+        <Link to={"/"}>Kategoriyalar </Link>
+      ) : pathnames[0] === "models" ? (
+        <div>
+          <Link to={"/"}>Kategoriyalar </Link>{" "}
+          <Link ref={myRef} to={`/${pathnames[0]}/${pathnames[1]}`}>
+            Modellar
+          </Link>
+        </div>
+      ) : pathnames[0] === "item" ? (
+        <div className="flex gap-[10px]">
+          <Link to={"/"}>Categroy </Link>
+          <span>&gt;</span>
+          <Link to={`${modelsLinks}`}>Models</Link>
+          <span>&gt;</span>
+          <p className="cursor-pointer">Info Car</p>
+        </div>
+      ) : null}
+    </div>
   );
 };
 
