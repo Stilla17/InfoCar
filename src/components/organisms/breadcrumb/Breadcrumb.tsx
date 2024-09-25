@@ -8,23 +8,25 @@ const Breadcrumb: React.FC = () => {
 
   const myRef = useRef<HTMLAnchorElement>(null);
   const [modelsLinks, setModelsLinks] = useState<any>();
-  console.log(modelsLinks);
 
   useEffect(() => {
+    const mustLink: string[] = [];
     if (myRef.current) {
       setModelsLinks(myRef.current.href);
+      mustLink.push(modelsLinks);
+      console.log(mustLink);
     }
   }, [pathnames]);
 
   return (
     <div>
       {pathnames.length === 0 ? (
-        <Link to={"/"}>Kategoriyalar </Link>
+        <Link to={"/"}>Categroy </Link>
       ) : pathnames[0] === "models" ? (
-        <div>
-          <Link to={"/"}>Kategoriyalar </Link>{" "}
+        <div className="flex gap-[10px]">
+          <Link to={"/"}>Categroy </Link> <span>&gt;</span>
           <Link ref={myRef} to={`/${pathnames[0]}/${pathnames[1]}`}>
-            Modellar
+            Models
           </Link>
         </div>
       ) : pathnames[0] === "item" ? (

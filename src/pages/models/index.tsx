@@ -14,6 +14,7 @@ interface MODELS_TYPES {
   year?: string;
   color?: string;
   distance?: string;
+  inavatar?: string;
 }
 
 const Models: React.FC = () => {
@@ -41,16 +42,19 @@ const Models: React.FC = () => {
   }, [MODELS]);
 
   return (
-    <div className="models">
-      {modelsData.map((item) => (
-        <Link key={item.id} to={`/item/${item.id}`} state={{ model: item }}>
-          <div>
-            <img src={item.avatar} alt={item.name + " image"} />
-            <h3>{item.name}</h3>
-            <p>{item.price}</p>
-          </div>
-        </Link>
-      ))}
+    <div className="models mt-[100px]">
+      <h1 className="text-blue-600 text-[36px] mb-[50px]">Modellar</h1>
+      <div className="flex gap-[20px] flex-wrap">
+        {modelsData.map((item) => (
+          <Link key={item.id} to={`/item/${item.id}`} state={{ model: item }}>
+            <div>
+              <img src={item.avatar} alt={item.name + " image"} />
+              <h3>{item.name}</h3>
+              <p>{item.price}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

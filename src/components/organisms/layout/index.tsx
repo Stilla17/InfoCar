@@ -8,8 +8,10 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="layout">
-      <Breadcrumb />
-      <div className="container">{children}</div>
+      <div className="container">
+        <Breadcrumb />
+        {children}
+      </div>
     </div>
   );
 };

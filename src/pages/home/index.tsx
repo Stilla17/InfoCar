@@ -34,19 +34,22 @@ const Home: React.FC = () => {
   }, [CATEGORY]);
 
   return (
-    <div className="home flex gap-[20px] ">
-      {categoryData?.map((item) => (
-        <Link key={item.id} to={`/models/${item.name}`}>
-          <div className="w-[300px] ">
-            <img
-              className="h-[200px]"
-              src={item.avatar}
-              alt={item.name + " image"}
-            />
-            <h2>{item.name}</h2>
-          </div>
-        </Link>
-      ))}
+    <div className="home  mt-[100px]">
+      <h1 className="text-blue-600 text-[36px] mb-[50px]">Kategoriyalar</h1>
+      <div className="flex  gap-[20px] ">
+        {categoryData?.map((item) => (
+          <Link key={item.id} to={`/models/${item.name}`}>
+            <div className="w-[300px]  ">
+              <img
+                className="h-[200px]"
+                src={item.avatar}
+                alt={item.name + " image"}
+              />
+              <h2>{item.name}</h2>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
