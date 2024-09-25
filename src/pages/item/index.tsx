@@ -7,6 +7,8 @@ const Item: React.FC = () => {
   const model = location.state?.model;
   const outRef = useRef<HTMLInputElement>(null);
   const insideRef = useRef<HTMLInputElement>(null);
+  const imgAlert: string =
+    "Hozircha ushbu moshinadning salon qismini rasmi mavjud emas!";
 
   if (!model) {
     return <div>Model not found!</div>;
@@ -73,11 +75,15 @@ const Item: React.FC = () => {
       </div>
       <div className="main-item">
         <h1 className="text-blue-500 text-[36px]">{model.name}</h1>
-        <img
-          className="w-[800px] h-[600px]"
-          src={img ? model.avatar : model.inavatar}
-          alt=""
-        />
+        <div className="w-[800px] h-[600px]">
+          {img && model.avatar ? (
+            <img className="w-[800px] h-[600px]" src={model.avatar} />
+          ) : !img && !model.inavatar ? (
+            <p>{imgAlert}</p>
+          ) : (
+            <img className="w-[800px] h-[600px]" src={model.inavatar} />
+          )}
+        </div>
         <form className="form  ">
           <p className="text-[12px] mb-[20px] mt-[20px]">
             Tasvir tanlangan konfiguratsiyaga mos kelmasligi mumkin. Mashinaning
