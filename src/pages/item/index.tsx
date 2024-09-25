@@ -1,16 +1,24 @@
 import { useLocation } from "react-router-dom";
-
 import { useRef, useState } from "react";
+
 const Item: React.FC = () => {
   const [img, setImg] = useState<boolean>(true);
   const location = useLocation();
   const model = location.state?.model;
+  const outRef = useRef<HTMLInputElement>(null);
+  const insideRef = useRef<HTMLInputElement>(null);
 
   if (!model) {
     return <div>Model not found!</div>;
   }
 
-  const handleCheck = () => {};
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.id === "tashqi") {
+      setImg(true);
+    } else if (e.target.id === "ichki") {
+      setImg(false);
+    }
+  };
 
   return (
     <div className="item mt-[30px] flex gap-[30px]">
@@ -65,16 +73,38 @@ const Item: React.FC = () => {
       </div>
       <div className="main-item">
         <h1 className="text-blue-500 text-[36px]">{model.name}</h1>
-        <img src={img ? model.avatar : model.inavatar} alt="" />
-        <form className="form flex gap-[20px]">
-          <label form="tashqi">
-            Tashqi:
-            <input id="tashqi" type="radio" />
-          </label>
-          <label form="ichki">
-            Ichki:
-            <input id="ichki" type="radio" />
-          </label>
+        <img
+          className="w-[800px] h-[600px]"
+          src={img ? model.avatar : model.inavatar}
+          alt=""
+        />
+        <form className="form  ">
+          <p className="text-[12px] mb-[20px] mt-[20px]">
+            Tasvir tanlangan konfiguratsiyaga mos kelmasligi mumkin. Mashinaning
+            rangi ushbu saytda taqdim etilganidan farq qilishi mumkin.
+          </p>
+          <div className="flex gap-[20px] justify-center">
+            <label form="tashqi">
+              Tashqi:
+              <input
+                ref={outRef}
+                name="check"
+                id="tashqi"
+                type="radio"
+                onChange={handleCheck}
+              />
+            </label>
+            <label form="ichki">
+              Ichki:
+              <input
+                ref={insideRef}
+                name="check"
+                id="ichki"
+                type="radio"
+                onChange={handleCheck}
+              />
+            </label>
+          </div>
         </form>
       </div>
     </div>

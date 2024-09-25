@@ -10,11 +10,8 @@ const Breadcrumb: React.FC = () => {
   const [modelsLinks, setModelsLinks] = useState<any>();
 
   useEffect(() => {
-    const mustLink: string[] = [];
     if (myRef.current) {
       setModelsLinks(myRef.current.href);
-      mustLink.push(modelsLinks);
-      console.log(mustLink);
     }
   }, [pathnames]);
 
